@@ -108,34 +108,7 @@ public class Main {
 		scene.addGameObject(obj);
 		
 		// Testing Shader
-		
-		String vertexSrc = "#version 330 core\r\n"
-				+ "layout (location = 0) in vec3 aPos; // the position variable has attribute position 0\r\n"
-				+ "layout (location = 1) in vec2 atexCoors; \n"
-				+ "  \r\n"
-				+ "out vec4 vertexColor; // specify a color output to the fragment shader\r\n"
-				+ "out vec2 texCoors;\n"
-				+ "\r\n"
-				+ "void main()\r\n"
-				+ "{\r\n"
-				+ "    gl_Position = vec4(aPos, 1.0); // see how we directly give a vec3 to vec4's constructor\r\n"
-				+ "    vertexColor = vec4(0.5, 0.0, 0.0, 1.0); // set the output variable to a dark-red color\r\n"
-				+ "		texCoors = atexCoors;\n"
-				+ "}";
-				
-				
-		String fragSrc = "#version 330 core\r\n"
-				+ "out vec4 FragColor;\r\n"
-				+ "  \r\n"
-				+ "in vec4 vertexColor; // the input variable from the vertex shader (same name and same type)  \r\n"
-				+ "in vec2 texCoors; \n"
-				+ "uniform sampler2D myTexture; \n"
-				+ "\r\n"
-				+ "void main()\r\n"
-				+ "{\r\n"
-				+ "    FragColor =  texture(myTexture, texCoors);\n"
-				+ "} ";
-		
+
 		float data[] = {
 			-0.5f,-0.5f,
 			 0.5f,-0.5f,
@@ -162,7 +135,7 @@ public class Main {
 		
 		tex.bind();
 		
-		Shader shader = new Shader(vertexSrc,fragSrc);
+		Shader shader = new Shader("BasicVertex.GLSL", "BasicFrag.GLSL");
 		
 		shader.bind();
 		
