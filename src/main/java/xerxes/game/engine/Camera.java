@@ -15,7 +15,7 @@ public class Camera {
     public Camera(){
         // camera postion stored as a vector
         Vector3f camPos = new Vector3f(0.0f,0.0f,0.0f);
-        
+
         Vector3f camTarget = new Vector3f(0.0f,0.0f,0.0f);
 
         Vector3f camDir = new Vector3f();
