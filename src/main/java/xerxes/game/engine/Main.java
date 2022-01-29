@@ -3,6 +3,7 @@ package xerxes.game.engine;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
+import org.joml.*;
 
 import java.nio.*;
 
@@ -47,7 +48,7 @@ public class Main {
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
 
 		// Create the window
-		window = glfwCreateWindow(300, 300, "Hello World!", NULL, NULL);
+		window = glfwCreateWindow(960, 540, "XERG", NULL, NULL);
 		if ( window == NULL )
 			throw new RuntimeException("Failed to create the GLFW window");
 
@@ -109,10 +110,13 @@ public class Main {
 		
 		// Testing Shader
 
+		// grok the opengl coordinate system
+
 		float data[] = {
-			-0.5f,-0.5f,
-			 0.5f,-0.5f,
-			 0.5f,0.5f,
+				0.0f, 540.0f, // 0
+				200.0f, 100.0f, // 1
+				500.0f, 200.0f, // 2
+				100f, 100.0f
 			};
 		
 		float texCoords[] = {
@@ -120,8 +124,7 @@ public class Main {
 			    1.0f, 0.0f,  // lower-right corner
 			    0.5f, 1.0f   // top-center corner
 			};
-		
-		
+
 		
 		VertexBuffer vb = new VertexBuffer(data);
 		
@@ -130,21 +133,34 @@ public class Main {
 		VertexArray vao = new VertexArray(vb,tc);
 		
 		Texture tex = new Texture("test.png");
-		
+
 		vao.bind();
 		
 		tex.bind();
 		
 		Shader shader = new Shader("BasicVertex.GLSL", "BasicFrag.GLSL");
-		
 		shader.bind();
-		
+
+
+		Matrix4f proj = new Matrix4f();
+
+		proj.identity();
+
+		proj.ortho(0.0f,960.0f,0.0f,540.0f,-1.0f,1.0f);
+
+
+		//shader.setUniform4f("proj",proj);
+
+
+
+		Camera cam = new Camera(shader);
+
 		while ( !glfwWindowShouldClose(window) ) {
 			
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 			
 			vao.bind();
-			glDrawArrays(GL_TRIANGLES,0,3);
+			glDrawArrays(GL_TRIANGLES,0,4);
 
 			glfwSwapBuffers(window); // swap the color buffers
 

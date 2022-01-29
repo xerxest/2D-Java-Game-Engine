@@ -1,10 +1,14 @@
 package xerxes.game.engine;
 
+import org.joml.Matrix4f;
+import org.lwjgl.BufferUtils;
+
 import static org.lwjgl.opengl.GL33.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.nio.FloatBuffer;
 import java.util.Scanner;
 
 public class Shader {
@@ -36,6 +40,19 @@ public class Shader {
 
     public void bind() {
         glUseProgram(ID);
+    }
+
+    public void setUniform4f(String name, Matrix4f val){
+
+        int loc = glGetUniformLocation(ID,name);
+
+        System.out.println(name+" = "+loc);
+
+        FloatBuffer valBuffer = BufferUtils.createFloatBuffer(16);
+
+        val.get(valBuffer);
+
+        glUniformMatrix4fv(loc,false,valBuffer);
     }
 
     private int compileShader(String src, int shaderType) {
@@ -70,8 +87,6 @@ public class Shader {
         String src = "";
 
         URL url = Shader.class.getClassLoader().getResource(fileName);
-
-        //System.out.println(result);
 
         File file = new File(url.getPath());
 
