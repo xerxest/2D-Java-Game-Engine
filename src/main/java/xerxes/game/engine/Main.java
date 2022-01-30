@@ -148,11 +148,6 @@ public class Main {
 
 		proj.ortho(0.0f,960.0f,0.0f,540.0f,-1.0f,1.0f);
 
-
-		//shader.setUniform4f("proj",proj);
-
-
-
 		Camera cam = new Camera(shader);
 
 		while ( !glfwWindowShouldClose(window) ) {
