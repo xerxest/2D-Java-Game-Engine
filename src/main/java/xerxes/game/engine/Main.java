@@ -9,7 +9,7 @@ import java.nio.*;
 
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL33.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
@@ -48,7 +48,7 @@ public class Main {
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
 
 		// Create the window
-		window = glfwCreateWindow(960, 540, "XERG", NULL, NULL);
+		window = glfwCreateWindow(960, 540, "2D Game Engine", NULL, NULL);
 		if ( window == NULL )
 			throw new RuntimeException("Failed to create the GLFW window");
 
@@ -84,6 +84,7 @@ public class Main {
 
 		// Make the window visible
 		glfwShowWindow(window);
+
 	}
 
 	private void loop() throws Exception {
@@ -97,15 +98,15 @@ public class Main {
 		
 
 		// Set the clear color
-		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 		// Run the rendering loop until the user has attempted to close
 		// the window or has pressed the ESCAPE key.
 		
 		Scene scene = new Scene();
-		
+
 		TestGameObj obj = new TestGameObj();
-		
+
 		scene.addGameObject(obj);
 		
 		// Testing Shader
@@ -141,20 +142,14 @@ public class Main {
 		Shader shader = new Shader("BasicVertex.GLSL", "BasicFrag.GLSL");
 		shader.bind();
 
-
-		Matrix4f proj = new Matrix4f();
-
-		proj.identity();
-
-		proj.ortho(0.0f,960.0f,0.0f,540.0f,-1.0f,1.0f);
-
 		Camera cam = new Camera(shader);
 
 		while ( !glfwWindowShouldClose(window) ) {
 			
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
-			
-			vao.bind();
+
+			cam.update();
+
 			glDrawArrays(GL_TRIANGLES,0,4);
 
 			glfwSwapBuffers(window); // swap the color buffers

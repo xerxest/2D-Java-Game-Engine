@@ -22,6 +22,16 @@ public class Scene {
 		ObjList.add(newGameObject);
 		nonStaticObj.add((Update) newGameObject);
 	}
+
+	void addNonStaticObj(Update newGameObject) {
+
+		// do other stuff to filter game object into correct list
+
+		//newGameObject.CurrScene = this;
+
+		//ObjList.add(newGameObject);
+		nonStaticObj.add( newGameObject);
+	}
 	
 	
 	void update() {

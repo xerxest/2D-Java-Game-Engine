@@ -2,36 +2,51 @@ package xerxes.game.engine;
 
 import org.joml.*;
 
-public class Camera {
+public class Camera implements Update{
 
-
-    // camera postion stored as a vector
-    // camera's vectors of what its pointing at
-    // vector pointing to right
-    // vector pointing up
-    // Gram–Schmidt process
-    // ^^ creates a look at matrix
+    private Matrix4f viewMatrix;
+    private Matrix4f projectionMatrix;
+    private Vector3f position;
+    private Shader shader;
+    private Vector3f camFront;
+    private Vector3f camUp;
 
     public Camera(Shader shader){
-        // camera postion stored as a vector
-        Vector3f camPos   = new Vector3f(0.0f, 0.0f,  0.0f);
-        Vector3f camFront = new Vector3f(0.0f, 0.0f, -1.0f);
-        Vector3f camUp    = new Vector3f(0.0f, 1.0f,  0.0f);
 
-        Matrix4f lookAt = new Matrix4f();
+        position = new Vector3f(3.0f,3.0f,0.0f);
 
-        // fix me
-        lookAt.lookAt(camPos,(camPos.add(camFront)),camUp);
+        this.shader = shader;
 
-        Matrix4f proj = new Matrix4f();
+        projectionMatrix = new Matrix4f().identity();
 
-        proj.ortho(0.0f,960.0f,0.0f,540.0f,-1.0f,1000f);
+        projectionMatrix.ortho(0.0f,960.0f,0.0f,540.0f,-1.0f,1000f);
 
-        shader.setUniform4f("proj",proj);
-        shader.setUniform4f("view",lookAt);
+        this.camFront = new Vector3f(0.0f,0.0f,-1.0f);
+        this.camUp = new Vector3f(0.0f,1.0f,0.0f);
+        viewMatrix = new Matrix4f().identity();
+
+        viewMatrix.lookAt(new Vector3f(position.x,position.y,position.z),camFront.add(position.x,position.y,position.z),camUp);
+
+        shader.setUniform4f("proj",projectionMatrix);
+        shader.setUniform4f("view",viewMatrix);
 
     }
 
+    @Override
+    public void update() {
+
+        position.x += -0.1f;
+        position.y += 0.1f;
+
+        viewMatrix = new Matrix4f().identity();
+
+        this.camFront = new Vector3f(0.0f,0.0f,-1.0f);
+        this.camUp = new Vector3f(0.0f,1.0f,0.0f);
+
+        viewMatrix.lookAt(new Vector3f(position.x,position.y,position.z),camFront.add(position.x,position.y,0.0f),camUp);
+
+        shader.setUniform4f("view",viewMatrix);
+    }
 }
 
 

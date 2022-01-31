@@ -46,8 +46,6 @@ public class Shader {
 
         int loc = glGetUniformLocation(ID,name);
 
-        System.out.println(name+" = "+loc);
-
         FloatBuffer valBuffer = BufferUtils.createFloatBuffer(16);
 
         val.get(valBuffer);
