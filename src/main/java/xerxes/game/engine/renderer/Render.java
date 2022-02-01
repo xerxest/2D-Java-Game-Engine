@@ -1,43 +1,78 @@
 package xerxes.game.engine.renderer;
 
+import org.joml.Vector2f;
 import xerxes.game.engine.*;
 import xerxes.game.engine.test.GameObjTestGen;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
+
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.glDrawArrays;
 
 public class Render {
 
-    private Sprite[] spriteList;
+    private ArrayList<GameObject> objList;
+    private final float[] texCoords = {
+            0.0f, 0.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+            0.0f, 1.0f
+    };
 
-    public Render() throws Exception {
+    public Render() {
 
-        ArrayList<GameObject> objList;
 
         GameObjTestGen gameObjs = new GameObjTestGen();
 
         objList = gameObjs.genObjs();
 
+        objList.sort(Comparator.comparingInt(GameObject::getTextureID));
 
-        spriteList = new Sprite[objList.size()];
+        objList.sort(Comparator.comparingInt(o -> o.layerID));
 
-        for(int i = 0; i < objList.size(); i++){
-            spriteList[i] = objList.get(i).render();
+    }
+    // TODO Implement batch rendering
+    // TODO Remove magic numbers
+    public void draw() throws Exception {
+
+        for (GameObject gameObject : objList) {
+
+            Vector2f leftDown  = new Vector2f(50f*gameObject.scale.x+gameObject.position.x, 50f*gameObject.scale.y+gameObject.position.y);
+            Vector2f leftUp    = new Vector2f(50f*gameObject.scale.x+gameObject.position.x, 100*gameObject.scale.y+gameObject.position.y);
+            Vector2f upRight   = new Vector2f(100*gameObject.scale.x+gameObject.position.x, 100*gameObject.scale.y+gameObject.position.y);
+            Vector2f downRight = new Vector2f(100*gameObject.scale.x+gameObject.position.x, 50*gameObject.scale.y+gameObject.position.y);
+
+            float[] quad ={
+                    leftUp.x,    leftUp.y,
+                    downRight.x, downRight.y,
+                    leftDown.x,  leftDown.y,
+
+                    leftUp.x,    leftUp.y,
+                    downRight.x, downRight.y,
+                    upRight.x,   upRight.y
+            };
+
+            VertexBuffer vb = new VertexBuffer(quad);
+
+            VertexBuffer tc = new VertexBuffer(texCoords);
+
+            VertexArray vao = new VertexArray(vb, tc);
+
+            Texture tex = new Texture(gameObject.getFileName());
+
+            vao.bind();
+
+            tex.bind();
+
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+
+
         }
-
-        Arrays.sort(spriteList, Comparator.comparingInt(Sprite::getTexID));
-
-        Arrays.sort(spriteList, Comparator.comparingInt(o -> o.layerID));
-
-        for(Sprite sp :spriteList){
-            System.out.println("TeX ID "+sp.getTexID());
-            System.out.println("Layer ID "+sp.layerID+"\n");
-
-        }
-
-        System.out.println("Done");
-
     }
 
 }

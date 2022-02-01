@@ -1,6 +1,7 @@
 package xerxes.game.engine;
 
 import org.joml.Vector2f;
+import xerxes.game.engine.renderer.Texture;
 
 public class GameObject {
 	
@@ -10,43 +11,40 @@ public class GameObject {
 
 	public int layerID = -1;
 	
-	public Scene CurrScene; 
-	
-	private Sprite sprite;
+	public Scene CurrScene;
 
-	public String fileName;
+	private int textureID;
 
-	public Sprite render() throws Exception {
+	private String fileName;
 
-		boolean errorFlag = false;
+	public void setTexture(String fileName){
 
 		if(fileName == ""){
-			System.out.println("Tex file is null");
-			errorFlag = true;
+			System.out.println("FILENAME IS EMPTY");
+		}else{
+
+			this.fileName = fileName;
+
+			textureID =  Texture.setID(fileName);
+			return;
 		}
 
-		if(position == null){
-			System.out.println("Position is null");
-			errorFlag = true;
+		textureID = -1;
+	}
 
-		}
+	public int getTextureID(){
+		return textureID;
+	}
 
-		if(scale == null){
-			System.out.println("Scale is null");
-			errorFlag = true;
-		}
+	public String getFileName(){
+		return fileName;
+	}
 
-		if(layerID == -1){
-			System.out.println("LayerID is null");
-			errorFlag = true;
-		}
+	// TODO default behavior
+	public GameObject(){
 
-		if(errorFlag){
-			throw new Exception();
-		}
-
-		return new Sprite(fileName,position,scale,layerID);
-		
 	}
 
 }
+
+

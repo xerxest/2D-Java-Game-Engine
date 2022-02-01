@@ -1,7 +1,7 @@
 package xerxes.game.engine;
-
 import java.util.ArrayList;
 
+// TODO GameObject Searching
 public class Scene {
 	
 	private ArrayList<GameObject> ObjList;
@@ -15,8 +15,6 @@ public class Scene {
 	
 	void addGameObject(GameObject newGameObject) {
 		
-		// do other stuff to filter game object into correct list 
-		
 		newGameObject.CurrScene = this;
 		
 		ObjList.add(newGameObject);
@@ -25,15 +23,9 @@ public class Scene {
 
 	void addNonStaticObj(Update newGameObject) {
 
-		// do other stuff to filter game object into correct list
-
-		//newGameObject.CurrScene = this;
-
-		//ObjList.add(newGameObject);
 		nonStaticObj.add( newGameObject);
 	}
-	
-	
+
 	void update() {
 		
 		for(Update u : nonStaticObj) {
@@ -42,6 +34,5 @@ public class Scene {
 			
 		}
 	}
-
 
 }

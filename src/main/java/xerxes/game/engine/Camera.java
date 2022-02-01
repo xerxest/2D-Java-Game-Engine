@@ -4,6 +4,10 @@ import org.joml.*;
 
 public class Camera implements Update{
 
+    public static final int SCREEN_SIZE_X = 960;
+
+    public static final int SCREEN_SIZE_Y = 540;
+
     private Matrix4f viewMatrix;
     private Matrix4f projectionMatrix;
     private Vector3f position;
@@ -11,6 +15,7 @@ public class Camera implements Update{
     private Vector3f camFront;
     private Vector3f camUp;
 
+    // TODO add Zoom
     public Camera(Shader shader){
 
         position = new Vector3f(3.0f,3.0f,0.0f);
@@ -21,7 +26,7 @@ public class Camera implements Update{
 
         //projectionMatrix.perspective(90.0f,16.9f,0.1f,10000.0f);
 
-        projectionMatrix.ortho(0.0f,960.0f,0.0f,540.0f,-1.0f,1000f);
+        projectionMatrix.ortho(0.0f,SCREEN_SIZE_X,0.0f,SCREEN_SIZE_Y,-1.0f,1000f);
 
         this.camFront = new Vector3f(0.0f,0.0f,-1.0f);
         this.camUp = new Vector3f(0.0f,1.0f,0.0f);
@@ -38,8 +43,6 @@ public class Camera implements Update{
 
     @Override
     public void update() {
-
-        position.x += 0.1f;
 
         viewMatrix = new Matrix4f().identity();
 

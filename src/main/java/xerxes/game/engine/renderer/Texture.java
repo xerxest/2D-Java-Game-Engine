@@ -35,7 +35,7 @@ public class Texture {
 		IntBuffer y = BufferUtils.createIntBuffer(1);
 		IntBuffer channels = BufferUtils.createIntBuffer(1);
 
-		ByteBuffer image = null;
+		ByteBuffer image;
 
 		image = stbi_load(fileName, x, y, channels, 0);
 
@@ -58,14 +58,16 @@ public class Texture {
 
 	}
 
-	public int setID(String fileName){
+	public static int setID(String fileName){
 
-		if(texMap.get(fileName) == null){
+		Integer idVal = texMap.get(fileName);
+
+		if(idVal == null){
 			TexID++;
-			texMap.put(fileName, (Integer)TexID);
+			texMap.put(fileName, TexID);
 			return TexID;
 		}
-		return  texMap.get(fileName);
+		return  idVal;
 	}
 
 }

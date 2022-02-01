@@ -10,7 +10,7 @@ public class GameObjTestGen {
 
     public ArrayList<GameObject> genObjs(){
 
-        ArrayList<GameObject> objList = new ArrayList<GameObject>();
+        ArrayList<GameObject> objList = new ArrayList<>();
 
         Random rand = new Random();
 
@@ -24,7 +24,7 @@ public class GameObjTestGen {
 
             int pic = rand.nextInt(4);
 
-            String fileName ="";
+            String fileName  = "";
 
             if(pic == 0){
                 fileName = "apple.jpg";
@@ -40,7 +40,7 @@ public class GameObjTestGen {
                 fileName = "bird.jpg";
             }
 
-            newObj.fileName = fileName;
+            newObj.setTexture(fileName);
 
             newObj.layerID = rand.nextInt(5);
 

@@ -1,5 +1,6 @@
 package xerxes.game.engine;
 
+import org.joml.Matrix4f;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
@@ -106,37 +107,6 @@ public class Main {
 		
 		Scene scene = new Scene();
 
-		// Testing Shader
-
-		// grok the opengl coordinate system
-
-		float data[] = {
-				0.0f, 540.0f, // 0
-				200.0f, 100.0f, // 1
-				500.0f, 200.0f, // 2
-				100f, 100.0f,
-				-100f, 100.0f
-			};
-
-		float texCoords[] = {
-			    0.0f, 0.0f,  // lower-left corner  
-			    1.0f, 0.0f,  // lower-right corner
-			    0.5f, 1.0f   // top-center corner
-			};
-
-		
-		VertexBuffer vb = new VertexBuffer(data);
-		
-		VertexBuffer tc = new VertexBuffer(texCoords);
-		
-		VertexArray vao = new VertexArray(vb,tc);
-		
-		Texture tex = new Texture("test.png");
-
-		vao.bind();
-		
-		tex.bind();
-		
 		Shader shader = new Shader("BasicVertex.GLSL", "BasicFrag.GLSL");
 		shader.bind();
 
@@ -147,10 +117,7 @@ public class Main {
 		while ( !glfwWindowShouldClose(window) ) {
 			
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
-
-			cam.update();
-
-			glDrawArrays(GL_TRIANGLES,0,4);
+			render.draw();
 
 			glfwSwapBuffers(window); // swap the color buffers
 
