@@ -1,16 +1,23 @@
-package xerxes.game.engine;
+package xerxes.game.engine.renderer;
 
 import static org.lwjgl.opengl.GL33.*;
 import static org.lwjgl.stb.STBImage.*;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.util.HashMap;
 
 import org.lwjgl.BufferUtils;
 
 public class Texture {
 
 	private int ID;
+
+	public static int TexID = 0;
+
+	public static HashMap<String,Integer > texMap = new HashMap<String,Integer>();
+
+	public int currTexID  = -1;
 
 	public Texture(String fileName) throws Exception {
 
@@ -33,6 +40,7 @@ public class Texture {
 		image = stbi_load(fileName, x, y, channels, 0);
 
 		if (image != null) {
+			this.currTexID = setID(fileName);
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x.get(0), y.get(0), 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 			glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -48,6 +56,16 @@ public class Texture {
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, ID);
 
+	}
+
+	public int setID(String fileName){
+
+		if(texMap.get(fileName) == null){
+			TexID++;
+			texMap.put(fileName, (Integer)TexID);
+			return TexID;
+		}
+		return  texMap.get(fileName);
 	}
 
 }

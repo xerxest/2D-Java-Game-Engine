@@ -3,7 +3,8 @@ package xerxes.game.engine;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
-import org.joml.*;
+import xerxes.game.engine.renderer.Render;
+import xerxes.game.engine.renderer.Texture;
 
 import java.nio.*;
 
@@ -105,10 +106,6 @@ public class Main {
 		
 		Scene scene = new Scene();
 
-		TestGameObj obj = new TestGameObj();
-
-		scene.addGameObject(obj);
-		
 		// Testing Shader
 
 		// grok the opengl coordinate system
@@ -117,9 +114,10 @@ public class Main {
 				0.0f, 540.0f, // 0
 				200.0f, 100.0f, // 1
 				500.0f, 200.0f, // 2
-				100f, 100.0f
+				100f, 100.0f,
+				-100f, 100.0f
 			};
-		
+
 		float texCoords[] = {
 			    0.0f, 0.0f,  // lower-left corner  
 			    1.0f, 0.0f,  // lower-right corner
@@ -144,6 +142,8 @@ public class Main {
 
 		Camera cam = new Camera(shader);
 
+		Render render = new Render();
+
 		while ( !glfwWindowShouldClose(window) ) {
 			
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
@@ -159,6 +159,8 @@ public class Main {
 			glfwPollEvents(); 
 		}
 	}
+
+
 
 	public static void main(String[] args) throws Exception {
 		

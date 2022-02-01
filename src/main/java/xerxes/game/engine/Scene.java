@@ -42,15 +42,6 @@ public class Scene {
 			
 		}
 	}
-	
-	void Render() {
-	
-		for(GameObject u : ObjList) {
-			
-			u.Render();
-			
-		}
-		
-	}
+
 
 }
