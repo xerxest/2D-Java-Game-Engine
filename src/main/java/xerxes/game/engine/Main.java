@@ -1,11 +1,15 @@
 package xerxes.game.engine;
 
+import imgui.ImGui;
+import imgui.flag.ImGuiConfigFlags;
+import imgui.gl3.ImGuiImplGl3;
+import imgui.internal.ImGuiContext;
 import org.joml.Matrix4f;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
 import xerxes.game.engine.renderer.Render;
-import xerxes.game.engine.renderer.Texture;
+import xerxes.game.engine.vendor.ImGuiImplGlfw;
 
 import java.nio.*;
 
@@ -114,10 +118,33 @@ public class Main {
 
 		Render render = new Render();
 
+		ImGui.init();
+		ImGui.createContext();
+		ImGuiImplGlfw implGlfw = new ImGuiImplGlfw();
+		ImGuiImplGl3  imGuiImplGl3 = new ImGuiImplGl3();
+		implGlfw.init(window,true);
+		imGuiImplGl3.init();
+
 		while ( !glfwWindowShouldClose(window) ) {
 			
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 			render.draw();
+
+			implGlfw.newFrame();
+			ImGui.newFrame();
+
+			ImGui.text("Hello");
+
+			ImGui.render();
+			imGuiImplGl3.renderDrawData(ImGui.getDrawData());
+
+			if(ImGui.getIO().hasConfigFlags(ImGuiConfigFlags.ViewportsEnable)){
+				final long backupWindowPtr = org.lwjgl.glfw.GLFW.glfwGetCurrentContext();
+				ImGui.updatePlatformWindows();
+				ImGui.renderPlatformWindowsDefault();
+				GLFW.glfwMakeContextCurrent(backupWindowPtr);
+			}
+
 
 			glfwSwapBuffers(window); // swap the color buffers
 

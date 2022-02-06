@@ -10,13 +10,14 @@ import java.util.Comparator;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.glDrawArrays;
 
+
 public class Render {
 
     private ArrayList<GameObject> objList;
     private final float[] texCoords = {
-            0.0f, 0.0f,
+            0.0f, 1.0f,
             1.0f, 0.0f,
-            1.0f, 1.0f,
+            0.0f, 0.0f,
             0.0f, 1.0f,
             0.0f, 0.0f,
             1.0f, 0.0f,
@@ -36,8 +37,9 @@ public class Render {
         objList.sort(Comparator.comparingInt(o -> o.layerID));
 
     }
+
+
     // TODO Implement batch rendering
-    // TODO Remove magic numbers
     public void draw() throws Exception {
 
         for (GameObject gameObject : objList) {
@@ -74,5 +76,4 @@ public class Render {
 
         }
     }
-
 }
