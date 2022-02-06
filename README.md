@@ -1,8 +1,3 @@
-
-# Project Title
-
-A brief description of what this project does and who it's for
-
 # 2D Java Game Engine
 
 A toy 2D game engine to learn/experiment with graphics programming in OpenGL.
