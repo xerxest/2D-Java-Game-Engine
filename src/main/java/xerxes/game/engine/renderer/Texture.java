@@ -37,6 +37,8 @@ public class Texture {
 
 		ByteBuffer image;
 
+		stbi_set_flip_vertically_on_load(true);
+
 		image = stbi_load(fileName, x, y, channels, 0);
 
 		if (image != null) {

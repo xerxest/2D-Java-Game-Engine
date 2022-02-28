@@ -3,12 +3,11 @@ package xerxes.game.engine;
 import imgui.ImGui;
 import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
-import imgui.internal.ImGuiContext;
-import org.joml.Matrix4f;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
 import xerxes.game.engine.renderer.Render;
+import xerxes.game.engine.shaders.Shader;
 import xerxes.game.engine.vendor.ImGuiImplGlfw;
 
 import java.nio.*;

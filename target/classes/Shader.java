@@ -1,4 +1,4 @@
-package xerxes.game.engine;
+package xerxes.game.engine.shaders;
 
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;

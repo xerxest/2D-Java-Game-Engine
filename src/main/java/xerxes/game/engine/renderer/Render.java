@@ -15,14 +15,14 @@ public class Render {
 
     private ArrayList<GameObject> objList;
     private final float[] texCoords = {
-            0.0f, 1.0f,
-            1.0f, 0.0f,
-            0.0f, 0.0f,
-            0.0f, 1.0f,
-            0.0f, 0.0f,
-            1.0f, 0.0f,
-            1.0f, 1.0f,
-            0.0f, 1.0f
+
+            0.0f, 1.0f, // 0
+            1.0f, 0.0f, // 1
+            0.0f, 0.0f, // 2
+
+            0.0f, 1.0f, // 3
+            1.0f, 0.0f, // 4
+            1.0f, 1.0f, // 5
     };
 
     public Render() {

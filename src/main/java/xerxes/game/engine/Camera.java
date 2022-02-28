@@ -1,6 +1,7 @@
 package xerxes.game.engine;
 
 import org.joml.*;
+import xerxes.game.engine.shaders.Shader;
 
 public class Camera implements Update{
 
