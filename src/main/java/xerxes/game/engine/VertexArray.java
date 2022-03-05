@@ -28,4 +28,6 @@ public class VertexArray {
 		glBindVertexArray(ID);
 	}
 
+    public static class Model {
+    }
 }
