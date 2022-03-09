@@ -15,7 +15,7 @@ public class Scene {
 	
 	void addGameObject(Entity newGameObject) {
 		
-		newGameObject.CurrScene = this;
+//		newGameObject.CurrScene = this;
 		
 		ObjList.add(newGameObject);
 		nonStaticObj.add((Update) newGameObject);
