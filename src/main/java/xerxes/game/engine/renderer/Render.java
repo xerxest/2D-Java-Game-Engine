@@ -13,7 +13,7 @@ import static org.lwjgl.opengl.GL11.glDrawArrays;
 
 public class Render {
 
-    private ArrayList<GameObject> objList;
+    private ArrayList<Entity> objList;
     private final float[] texCoords = {
 
             0.0f, 1.0f, // 0
@@ -32,7 +32,7 @@ public class Render {
 
         objList = gameObjs.genObjs();
 
-        objList.sort(Comparator.comparingInt(GameObject::getTextureID));
+        objList.sort(Comparator.comparingInt(Entity::getTextureID));
 
         objList.sort(Comparator.comparingInt(o -> o.layerID));
 
@@ -42,7 +42,7 @@ public class Render {
     // TODO Implement batch rendering
     public void draw() throws Exception {
 
-        for (GameObject gameObject : objList) {
+        for (Entity gameObject : objList) {
 
             Vector2f leftDown  = new Vector2f(50f*gameObject.scale.x+gameObject.position.x, 50f*gameObject.scale.y+gameObject.position.y);
             Vector2f leftUp    = new Vector2f(50f*gameObject.scale.x+gameObject.position.x, 100*gameObject.scale.y+gameObject.position.y);

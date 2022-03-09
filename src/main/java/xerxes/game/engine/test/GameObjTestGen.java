@@ -1,22 +1,22 @@
 package xerxes.game.engine.test;
 
 import org.joml.Vector2f;
-import xerxes.game.engine.GameObject;
+import xerxes.game.engine.Entity;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class GameObjTestGen {
 
-    public ArrayList<GameObject> genObjs(){
+    public ArrayList<Entity> genObjs(){
 
-        ArrayList<GameObject> objList = new ArrayList<>();
+        ArrayList<Entity> objList = new ArrayList<>();
 
         Random rand = new Random();
 
         for(int i =0; i < 50; i++){
 
-            GameObject newObj = new GameObject();
+            Entity newObj = new Entity();
 
             newObj.position = new Vector2f(rand.nextInt(300),rand.nextInt(300));
 

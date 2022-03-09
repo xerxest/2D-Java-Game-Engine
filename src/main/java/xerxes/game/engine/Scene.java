@@ -4,18 +4,18 @@ import java.util.ArrayList;
 // TODO GameObject Searching
 public class Scene {
 	
-	private ArrayList<GameObject> ObjList;
+	private ArrayList<Entity> ObjList;
 	
 	private ArrayList<Update> nonStaticObj;
 	
 	public Scene() {
-		ObjList = new ArrayList<GameObject>();
+		ObjList = new ArrayList<Entity>();
 		nonStaticObj = new ArrayList<Update>();
 	}
 	
-	void addGameObject(GameObject newGameObject) {
+	void addGameObject(Entity newGameObject) {
 		
-		newGameObject.CurrScene = this;
+//		newGameObject.CurrScene = this;
 		
 		ObjList.add(newGameObject);
 		nonStaticObj.add((Update) newGameObject);
