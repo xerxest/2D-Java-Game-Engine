@@ -8,6 +8,8 @@ import java.util.Random;
 
 public class GameObjTestGen {
 
+    /*
+
     public ArrayList<Entity> genObjs(){
 
         ArrayList<Entity> objList = new ArrayList<>();
@@ -51,4 +53,6 @@ public class GameObjTestGen {
         return objList;
 
     }
+
+     */
 }

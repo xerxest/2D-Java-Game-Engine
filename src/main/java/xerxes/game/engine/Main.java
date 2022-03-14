@@ -14,6 +14,7 @@ import java.nio.*;
 
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
 import static org.lwjgl.opengl.GL33.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
@@ -53,7 +54,7 @@ public class Main {
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
 
 		// Create the window
-		window = glfwCreateWindow(960, 540, "2D Game Engine", NULL, NULL);
+		window = glfwCreateWindow(960, 540, "Game Engine", NULL, NULL);
 		if ( window == NULL )
 			throw new RuntimeException("Failed to create the GLFW window");
 
@@ -62,6 +63,8 @@ public class Main {
 			if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
 				glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
 		});
+
+		glfwSetKeyCallback(window,Camera::keyInput);
 
 		// Get the thread stack and push a new frame
 		try ( MemoryStack stack = stackPush() ) {
@@ -127,12 +130,12 @@ public class Main {
 		while ( !glfwWindowShouldClose(window) ) {
 			
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
-			render.draw();
+
 
 			implGlfw.newFrame();
 			ImGui.newFrame();
 
-			ImGui.text("Hello");
+			ImGui.text("X "+Camera.getposition().x+"\n  Y "+Camera.getposition().y+"\n Z "+Camera.getposition().z);
 
 			ImGui.render();
 			imGuiImplGl3.renderDrawData(ImGui.getDrawData());
@@ -145,6 +148,8 @@ public class Main {
 			}
 
 
+			render.draw();
+			cam.update();
 			glfwSwapBuffers(window); // swap the color buffers
 
 			// Poll for window events. The key callback above will only be

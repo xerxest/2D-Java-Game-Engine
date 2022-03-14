@@ -5,29 +5,20 @@ public class VertexArray {
 	
 	private int ID;
 	
-	public VertexArray(VertexBuffer mesh, VertexBuffer texCoors) {
+	public VertexArray(VertexBuffer mesh) {
 		
 		ID = glGenVertexArrays();
 				
 		glBindVertexArray(ID);
 		
 		mesh.bind();
-		
-		//only works with floats !!
+
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0,2,GL_FLOAT,false,2*Float.BYTES,0);
-		
-		texCoors.bind();
-		
-		glVertexAttribPointer(1,2,GL_FLOAT,false,2*Float.BYTES,0);
-		glEnableVertexAttribArray(1);
-		
+		glVertexAttribPointer(0,3,GL_FLOAT,false,0,0);
+
 	}
 	
 	public void bind(){
 		glBindVertexArray(ID);
 	}
-
-    public static class Model {
-    }
 }

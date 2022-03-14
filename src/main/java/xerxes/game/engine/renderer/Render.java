@@ -1,15 +1,12 @@
 package xerxes.game.engine.renderer;
-
-import org.joml.Vector2f;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL33;
 import xerxes.game.engine.*;
-import xerxes.game.engine.test.GameObjTestGen;
-
+import xerxes.game.engine.vendor.StaticMeshesLoader;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
-import java.util.Comparator;
 
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11.glDrawArrays;
-
+import static org.lwjgl.opengl.GL33.GL_TRIANGLES;
 
 public class Render {
 
@@ -25,55 +22,32 @@ public class Render {
             1.0f, 1.0f, // 5
     };
 
-    public Render() {
+    public Render() throws Exception {
 
-
-        GameObjTestGen gameObjs = new GameObjTestGen();
-
-        objList = gameObjs.genObjs();
-
-        objList.sort(Comparator.comparingInt(Entity::getTextureID));
-
-        objList.sort(Comparator.comparingInt(o -> o.layerID));
 
     }
 
 
-    // TODO Implement batch rendering
+
     public void draw() throws Exception {
 
-        for (Entity gameObject : objList) {
+        Mesh[] model = StaticMeshesLoader.load("testModel.obj","");
 
-            Vector2f leftDown  = new Vector2f(50f*gameObject.scale.x+gameObject.position.x, 50f*gameObject.scale.y+gameObject.position.y);
-            Vector2f leftUp    = new Vector2f(50f*gameObject.scale.x+gameObject.position.x, 100*gameObject.scale.y+gameObject.position.y);
-            Vector2f upRight   = new Vector2f(100*gameObject.scale.x+gameObject.position.x, 100*gameObject.scale.y+gameObject.position.y);
-            Vector2f downRight = new Vector2f(100*gameObject.scale.x+gameObject.position.x, 50*gameObject.scale.y+gameObject.position.y);
+        VertexBuffer vb = new VertexBuffer(model[0].getVertices());
 
-            float[] quad ={
-                    leftUp.x,    leftUp.y,
-                    downRight.x, downRight.y,
-                    leftDown.x,  leftDown.y,
+        VertexArray va = new VertexArray(vb);
 
-                    leftUp.x,    leftUp.y,
-                    downRight.x, downRight.y,
-                    upRight.x,   upRight.y
-            };
+        va.bind();
 
-            VertexBuffer vb = new VertexBuffer(quad);
+        IntBuffer indexBuf = BufferUtils.createIntBuffer(model[0].getIndices().length);
 
-            VertexBuffer tc = new VertexBuffer(texCoords);
+        indexBuf.put(model[0].getIndices());
 
-            VertexArray vao = new VertexArray(vb, tc);
+        indexBuf.flip();
 
-            Texture tex = new Texture(gameObject.getFileName());
+        GL33.glDrawElements(GL_TRIANGLES,indexBuf);
 
-            vao.bind();
-
-            tex.bind();
-
-            glDrawArrays(GL_TRIANGLES, 0, 6);
-
-
-        }
     }
+
+
 }
